@@ -2,6 +2,7 @@
 
 class Order < ApplicationRecord
   validates :price_per_item, :quantity, :shipping, :tax_rate, :ordered_at, presence: true
+  has_many :payments
 
   def total_sales
     price_per_item * quantity

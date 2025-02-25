@@ -11,6 +11,10 @@ RSpec.describe Order, type: :model do
     it { should validate_presence_of(:ordered_at) }
   end
 
+  describe "associations" do
+    it { should have_many(:payments) }
+  end
+
   describe "calculations" do
     let(:order) { Order.new(price_per_item: 10.0, quantity: 2, shipping: 5.0, tax_rate: 0.1) }
 

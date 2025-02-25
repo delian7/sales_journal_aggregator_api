@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 20_250_225_214_239) do
+ActiveRecord::Schema[7.2].define(version: 20_250_225_225_855) do
   create_table "orders", force: :cascade do |t|
     t.decimal "price_per_item"
     t.integer "quantity"
@@ -22,4 +22,15 @@ ActiveRecord::Schema[7.2].define(version: 20_250_225_214_239) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.decimal "payment_amount"
+    t.datetime "payment_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+  end
+
+  add_foreign_key "payments", "orders"
 end
