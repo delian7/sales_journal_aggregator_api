@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class Order < ApplicationRecord
-  validates :price_per_item, :quantity, :shipping, :tax_rate, :ordered_at, presence: true
   has_many :payments
+
+  validates :price_per_item, :quantity, :shipping, :tax_rate, :ordered_at, :item_type, presence: true
+  validates :price_per_item, :quantity, :shipping, numericality: { greater_than_or_equal_to: 0 }
+  validates :tax_rate, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1 }
 
   def total_sales
     price_per_item * quantity

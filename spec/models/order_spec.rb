@@ -9,6 +9,12 @@ RSpec.describe Order, type: :model do
     it { should validate_presence_of(:shipping) }
     it { should validate_presence_of(:tax_rate) }
     it { should validate_presence_of(:ordered_at) }
+    it { should validate_presence_of(:item_type) }
+    it { should validate_numericality_of(:price_per_item).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:quantity).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:shipping).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:tax_rate).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:tax_rate).is_less_than_or_equal_to(1) }
   end
 
   describe "associations" do
