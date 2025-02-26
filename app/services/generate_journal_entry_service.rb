@@ -7,10 +7,10 @@ class GenerateJournalEntryService
   end
 
   def call
-    total_revenue = @orders.sum(&:total_sales).to_f
-    total_shipping = @orders.sum(&:total_shipping).to_f
-    total_taxes = @orders.sum(&:total_taxes).to_f
-    total_received = @orders.sum { |o| o.payments.sum(&:payment_amount) }.to_f
+    total_revenue = @orders.sum(&:total_sales).to_f.round(2)
+    total_shipping = @orders.sum(&:total_shipping).to_f.round(2)
+    total_taxes = @orders.sum(&:total_taxes).to_f.round(2)
+    total_received = @orders.sum { |o| o.payments.sum(&:payment_amount) }.to_f.round(2)
 
     {
       month: @month.strftime("%m/%Y"),
