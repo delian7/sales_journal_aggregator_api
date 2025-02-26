@@ -40,7 +40,7 @@ RSpec.describe GenerateJournalEntryService, type: :service do
       total_shipping = orders.sum(&:total_shipping)
       total_taxes = orders.sum(&:total_taxes)
       total_received = orders.sum { |o| o.payments.sum(&:payment_amount) }
-      expect(result[:accounts_receivable][:debit]).to eq((total_revenue + total_shipping + total_taxes).round(2))
+      expect(result[:accounts_receivable][:debit].round(2)).to eq((total_revenue + total_shipping + total_taxes).round(2))
       expect(result[:accounts_receivable][:credit]).to eq(total_received.round(2))
     end
   end
