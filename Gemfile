@@ -3,7 +3,9 @@
 source "https://rubygems.org"
 
 gem "csv", ">= 3.0.0"
-
+gem "devise"
+gem "devise_token_auth"
+gem "omniauth"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1", ">= 7.2.1.1"
 # Use sqlite3 as the database for Active Record
