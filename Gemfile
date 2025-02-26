@@ -40,7 +40,7 @@ group :development, :test do
   gem "faker"
 
   gem "rspec-rails", "~> 6.0"
-  gem "shoulda-matchers", "~> 5.0"
+  gem "shoulda-matchers", "~> 6.4"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
