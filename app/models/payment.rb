@@ -3,5 +3,5 @@
 class Payment < ApplicationRecord
   belongs_to :order
 
-  validates :payment_amount, :payment_date, :order_id, presence: true
+  validates :payment_amount, :payment_date, :payment_id, :order_id, presence: true
 end
