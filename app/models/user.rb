@@ -8,8 +8,6 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   # Validations
-  validates :email, presence: true, uniqueness: { case_sensitive: false, scope: :provider }
-  validates :password, presence: true, length: { minimum: 6 }
   validates :first_name, presence: true
   validates :last_name, presence: true
 

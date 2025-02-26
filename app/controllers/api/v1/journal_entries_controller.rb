@@ -3,6 +3,8 @@
 module Api
   module V1
     class JournalEntriesController < ApplicationController
+      before_action :authenticate_user!
+
       def index
         orders_by_month = Order.includes(:payments).group_by { |o| o.ordered_at.beginning_of_month }
 

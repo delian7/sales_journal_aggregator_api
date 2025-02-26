@@ -2,14 +2,16 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::JournalEntriesController do
+RSpec.describe Api::V1::JournalEntriesController, type: :request do
   describe "GET #index" do
+    let(:user) { create(:user, password: "password") }
     let!(:order1) { create(:order_with_payments, ordered_at: DateTime.new(2023, 1, 15)) }
     let!(:order2) { create(:order_with_payments, ordered_at: DateTime.new(2023, 1, 20)) }
     let!(:order3) { create(:order_with_payments, ordered_at: DateTime.new(2023, 2, 10)) }
 
     before do
-      get :index
+      @auth_headers = auth_headers(user)
+      get api_v1_journal_entries_path, headers: @auth_headers
     end
 
     it "returns a successful response" do
