@@ -1,0 +1,2 @@
+order_id,ordered_at,item_type,price_per_item,quantity,shipping,tax_rate,payment_1_id,payment_1_amount,payment_2_id,payment_2_amount
+1,2025-02-25T00:00:00Z,item_type_1,10.0,2,5.0,0.1,payment_1,15.0,payment_2,20.0
