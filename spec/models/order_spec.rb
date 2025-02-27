@@ -20,7 +20,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe "associations" do
-    it { should have_many(:payments) }
+    it { should have_many(:payments).dependent(:destroy) }
   end
 
   describe "calculations" do

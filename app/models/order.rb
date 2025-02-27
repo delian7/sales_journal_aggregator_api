@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Order < ApplicationRecord
-  has_many :payments
+  has_many :payments, dependent: :destroy
 
   validates :external_order_id, presence: true, uniqueness: true
   validates :price_per_item, :quantity, :shipping, :tax_rate, :ordered_at, :item_type, presence: true
