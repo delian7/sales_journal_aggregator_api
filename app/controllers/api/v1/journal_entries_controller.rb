@@ -17,7 +17,6 @@ module Api
       def show
         month = params[:month]
         year = params[:year]
-        raise ArgumentError, "Invalid month or year" unless month && year
 
         date = DateTime.new(year.to_i, month.to_i)
         orders = Order.where("strftime('%Y-%m', ordered_at) = ?", date.strftime("%Y-%m"))

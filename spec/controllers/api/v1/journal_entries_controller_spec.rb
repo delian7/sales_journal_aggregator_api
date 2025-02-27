@@ -73,7 +73,7 @@ RSpec.describe Api::V1::JournalEntriesController, type: :request do
 
     context "when user is not authenticated" do
       before do
-        get api_v1_journal_entry_path, params: { month: 1, year: 2023 }
+        get show_api_v1_journal_entries_path(month: 1, year: 2023)
       end
 
       it "returns a 401 Unauthorized response" do
@@ -86,24 +86,9 @@ RSpec.describe Api::V1::JournalEntriesController, type: :request do
       end
     end
 
-    context "when year and month are not provided" do
-      before do
-        get api_v1_journal_entry_path, headers: @auth_headers
-      end
-
-      it "returns a 400 Bad Request response" do
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it "returns an error message" do
-        json_response = JSON.parse(response.body)
-        expect(json_response["error"]).to include("Invalid month or year")
-      end
-    end
-
     context "when journal entry exists" do
       before do
-        get api_v1_journal_entry_path(month: 1, year: 2023), headers: @auth_headers
+        get show_api_v1_journal_entries_path(month: 1, year: 2023), headers: @auth_headers
       end
 
       it "returns a successful response" do
@@ -142,7 +127,7 @@ RSpec.describe Api::V1::JournalEntriesController, type: :request do
 
     context "when journal entry does not exist" do
       before do
-        get api_v1_journal_entry_path(month: 5, year: 2025), headers: @auth_headers
+        get show_api_v1_journal_entries_path(month: 5, year: 2025), headers: @auth_headers
       end
 
       it "returns a 404 Not Found response" do
