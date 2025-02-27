@@ -6,7 +6,7 @@ gem "csv", ">= 3.0.0"
 gem "devise"
 gem "devise_token_auth"
 gem "omniauth"
-gem 'rack-cors', require: 'rack/cors'
+gem "rack-cors", require: "rack/cors"
 gem "rails", "~> 7.2.1", ">= 7.2.1.1"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
