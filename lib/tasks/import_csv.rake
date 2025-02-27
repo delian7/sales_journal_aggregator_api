@@ -15,8 +15,8 @@ namespace :import do
     csv_file_path = Rails.root.join("data.csv")
     CSV.foreach(csv_file_path, headers: true) do |row|
       ActiveRecord::Base.transaction do
-        order = Order.find_or_create_by(
-          id: row["order_id"],
+        order = Order.create!(
+          external_order_id: row["order_id"],
           ordered_at: row["ordered_at"],
           item_type: row["item_type"],
           price_per_item: row["price_per_item"],
@@ -48,7 +48,7 @@ namespace :import do
       end
     end
 
-    puts "Successfully imported #{successfully_imported} orders and payments"
+    puts "Successfully imported #{successfully_imported} orders and payments" unless Rails.env.test?
   rescue StandardError => e
     Rails.logger.error "Error: #{e.message}"
     puts "Error: #{e.message}"
