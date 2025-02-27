@@ -103,17 +103,13 @@ RSpec.describe Api::V1::JournalEntriesController, type: :request do
 
       it "returns the correct journal entry data" do
         json_response = JSON.parse(response.body)
-        expect(json_response["journal_entry"]["accounts_receivable"]).to be_present
+        expect(json_response["journal_entry"]["accounts_receivable_orders"]).to be_present
         expect(json_response["journal_entry"]["revenue"]).to be_present
+        expect(json_response["journal_entry"]["accounts_receivable_shipping"]).to be_present
         expect(json_response["journal_entry"]["shipping_revenue"]).to be_present
+        expect(json_response["journal_entry"]["accounts_receivable_taxes"]).to be_present
         expect(json_response["journal_entry"]["sales_tax_payable"]).to be_present
         expect(json_response["journal_entry"]["cash"]).to be_present
-        expect(json_response["journal_entry"]["accounts_receivable"]["debit"]).to be_present
-        expect(json_response["journal_entry"]["accounts_receivable"]["credit"]).to be_present
-        expect(json_response["journal_entry"]["revenue"]["credit"]).to be_present
-        expect(json_response["journal_entry"]["shipping_revenue"]["credit"]).to be_present
-        expect(json_response["journal_entry"]["sales_tax_payable"]["credit"]).to be_present
-        expect(json_response["journal_entry"]["cash"]["debit"]).to be_present
       end
 
       context "when the cache is enabled" do

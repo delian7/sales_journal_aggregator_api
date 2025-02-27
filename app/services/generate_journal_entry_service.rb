@@ -14,20 +14,30 @@ class GenerateJournalEntryService
 
     {
       month: @month.strftime("%m/%Y"),
-      accounts_receivable: {
-        debit: total_revenue + total_shipping + total_taxes,
-        credit: total_received,
-        description: "Cash expected for orders, shipping, and taxes"
+      accounts_receivable_orders: {
+        debit: total_revenue,
+        credit: 0,
+        description: "Cash expected for orders"
       },
       revenue: {
         debit: 0,
         credit: total_revenue,
         description: "Revenue for orders"
       },
+      accounts_receivable_shipping: {
+        debit: total_shipping,
+        credit: 0,
+        description: "Cash expected for shipping on orders"
+      },
       shipping_revenue: {
         debit: 0,
         credit: total_shipping,
         description: "Revenue for shipping"
+      },
+      accounts_receivable_taxes: {
+        debit: total_taxes,
+        credit: 0,
+        description: "Cash expected for taxes"
       },
       sales_tax_payable: {
         debit: 0,
@@ -38,6 +48,11 @@ class GenerateJournalEntryService
         debit: total_received,
         credit: 0,
         description: "Cash received"
+      },
+      accounts_receivable_settled: {
+        debit: 0,
+        credit: total_received,
+        description: "Removal of expectation of cash"
       }
     }
   end

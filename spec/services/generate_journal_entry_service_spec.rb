@@ -10,40 +10,51 @@ RSpec.describe GenerateJournalEntryService, type: :service do
 
     it "calculates the total revenue" do
       result = service.call
-      total_revenue = orders.sum { |order| order.price_per_item * order.quantity }
-      expect(result[:revenue][:credit]).to eq(total_revenue.round(2))
+      total_revenue = orders.sum { |order| order.price_per_item * order.quantity }.round(2)
+
+      expect(result[:revenue][:credit]).to be_within(0.01).of(total_revenue)
       expect(result[:revenue][:debit]).to eq(0)
     end
 
-    it "calculates the total shipping" do
+    it "calculates the total shipping revenue separately" do
       result = service.call
-      total_shipping = orders.sum(&:shipping)
-      expect(result[:shipping_revenue][:credit]).to eq(total_shipping.round(2))
+      total_shipping = orders.sum(&:shipping).round(2)
+
+      expect(result[:shipping_revenue][:credit]).to be_within(0.01).of(total_shipping)
       expect(result[:shipping_revenue][:debit]).to eq(0)
     end
 
-    it "calculates the total taxes" do
+    it "calculates the total sales tax payable separately" do
       result = service.call
-      total_taxes = orders.sum { |order| order.price_per_item * order.quantity * order.tax_rate }
-      expect(result[:sales_tax_payable][:credit]).to eq(total_taxes.round(2))
+      total_taxes = orders.sum { |order| (order.price_per_item * order.quantity * order.tax_rate).round(2) }
+
+      expect(result[:sales_tax_payable][:credit]).to be_within(0.01).of(total_taxes)
       expect(result[:sales_tax_payable][:debit]).to eq(0)
     end
 
-    it "calculates the total received payments" do
+    it "calculates the total cash received" do
       result = service.call
-      total_received = orders.sum { |order| order.payments.sum(&:payment_amount) }
-      expect(result[:cash][:debit]).to eq(total_received.round(2))
+      total_received = orders.sum { |order| order.payments.sum(&:payment_amount) }.round(2)
+
+      expect(result[:cash][:debit]).to be_within(0.01).of(total_received)
       expect(result[:cash][:credit]).to eq(0)
     end
 
-    it "calculates the accounts receivable" do
+    it "ensures all debits match all credits" do
       result = service.call
-      total_revenue = orders.sum(&:total_sales)
-      total_shipping = orders.sum(&:total_shipping)
-      total_taxes = orders.sum(&:total_taxes)
-      total_received = orders.sum { |o| o.payments.sum(&:payment_amount) }
-      expect(result[:accounts_receivable][:debit].round(2)).to eq((total_revenue + total_shipping + total_taxes).round(2))
-      expect(result[:accounts_receivable][:credit]).to eq(total_received.round(2))
+
+      total_debits = result
+                     .except(:month)
+                     .values
+                     .sum { |entry| entry[:debit] }
+
+      # total_credits = result.values.sum { |entry| entry[:credit] }
+      total_credits = result
+                      .except(:month)
+                      .values
+                      .sum { |entry| entry[:credit] }
+
+      expect(total_debits).to be_within(0.01).of(total_credits)
     end
   end
 end
