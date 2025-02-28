@@ -15,6 +15,16 @@ This README documents the steps necessary to get the Sales Journal Aggregator AP
 - [Deployment Instructions](#deployment-instructions)
 - [Implementation Decisions](#implementation-decisions)
 
+## Live Demo
+The apps have been deployed and can be viewed at **https://sales-journal.vercel.app**.
+*Since this is a free deployment, initially it might be slow to spin up.*
+
+Please use the email/password below:
+  ```sh
+    email: test@example.com
+    password: password
+  ```
+
 ## Ruby Version
 
 - Ruby 3.3.4
