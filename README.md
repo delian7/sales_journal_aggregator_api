@@ -59,6 +59,13 @@ This README documents the steps necessary to get the Sales Journal Aggregator AP
     rails db:seed
     ```
 
+   This will create the test user
+   ```
+    # Test User (use this in the React Login Page)
+    email: test@example.com
+    password: password
+   ```
+
 ## Run the application
 
 1. Run the server:
